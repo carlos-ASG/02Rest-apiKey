@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
+const apiKey = uuidv4();
 
 async function login(req, res) {
   const { username, password } = req.body;
@@ -16,8 +17,6 @@ async function login(req, res) {
       .status(403)
       .json({ code: 403, message: "Contraseña incorrecta" });
 
-  const apiKey = uuidv4();
-
   return res.status(200).json({
     code: 200,
     message: "Inicio de sesión exitoso",
@@ -25,5 +24,5 @@ async function login(req, res) {
   });
 }
 
-module.exports = { login };
+module.exports = { login, apiKey };
 

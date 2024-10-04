@@ -1,3 +1,5 @@
+const api = require('../controllers/authController')
+
 function authenticateAPIKey(req, res, next) {
   const apiKeyHeader = req.headers['authorization'];
   
@@ -10,7 +12,12 @@ function authenticateAPIKey(req, res, next) {
     return res.status(403).json({ code: 403, message: 'API key inválida' });
   }
   
-  next();
+  if(api.apiKey === apiKey) {
+    next();
+  }else{
+    return res.status(403).json({ code: 403, message: 'API key no válida '});
+  }
+  
 }
 
 module.exports = authenticateAPIKey;
